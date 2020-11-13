@@ -1,5 +1,8 @@
-export { a } from "@/a";
+import chalk from "chalk";
+import server from "./server";
 
-export const helloWorld = () => {
-  return "buenos dias buenos aires";
-};
+const port = process.env.EXPRESS_PORT || 4000;
+
+server.listen(port, () => {
+  console.log(chalk.green(`Server listening on port ${port}`));
+});
