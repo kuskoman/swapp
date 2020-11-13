@@ -1,7 +1,0 @@
-type Mutation {
-  helloWorld: String!
-}
-
-type Query {
-  worldHello: String
-}
