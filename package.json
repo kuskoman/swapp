@@ -1,0 +1,8 @@
+{
+  "name": "startwars-api",
+  "version": "0.0.1",
+  "main": "dist/index.js",
+  "repository": "git@github.com:kuskoman/swapp.git",
+  "author": "kkm <kubasurdej@gmail.com>",
+  "license": "MIT"
+}
