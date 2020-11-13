@@ -5,6 +5,10 @@
   "repository": "git@github.com:kuskoman/swapp.git",
   "author": "kkm <kubasurdej@gmail.com>",
   "license": "MIT",
+  "scripts": {
+    "build": "tsc --p tsconfig.src.json",
+    "start": "ts-node src/index.ts"
+  },
   "dependencies": {
     "@graphql-tools/graphql-file-loader": "^6.2.5",
     "@graphql-tools/load": "^6.2.5",
