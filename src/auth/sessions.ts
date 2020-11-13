@@ -12,29 +12,20 @@ export const generateToken = async (userId: UserID): Promise<string> => {
   const hash = hashData(key);
   const randomString = randomBase64Url(8);
   const sessionIdentifier = `${userId}:${randomString}`;
-
-  const sessionInfo: SessionInfo = {
-    hash,
-    userId,
-  };
-
-  const stringifiedSessionInfo = JSON.stringify(sessionInfo);
+  const stringifiedSessionInfo = stringifySessionInfo(hash, userId);
 
   redis.setAsync(`session:${sessionIdentifier}`, stringifiedSessionInfo);
 
   return `${sessionIdentifier}:${key}`;
 };
 
+/* getUserIdFromToken splits token for session identifier and its hash,
+ * then finds session informations using the identifier. If key provided
+ * matches hash in database function returns user */
 export const getUserIdFromToken = async (
   token: SessionToken
 ): Promise<UserID> => {
-  const tokenParts = token.split(":");
-  if (tokenParts.length !== 3) {
-    throw new Error(invalidSessionKeyMessage);
-  }
-  const sessionIdentifier = tokenParts.slice(0, 2).join(":");
-  const key = tokenParts[2];
-  const keyHash = hashData(key);
+  const { sessionIdentifier, keyHash } = decodeToken(token);
 
   const redisResponse = await redis.getAsync(`session:${sessionIdentifier}`);
 
@@ -52,7 +43,35 @@ export const getUserIdFromToken = async (
   return sessionInfo.userId;
 };
 
+const stringifySessionInfo = (hash: string, userId: string): string => {
+  const sessionInfo: SessionInfo = {
+    hash,
+    userId,
+  };
+
+  const stringifiedSessionInfo = JSON.stringify(sessionInfo);
+
+  return stringifiedSessionInfo;
+};
+
+const decodeToken = (token: string): DecodedSessionToken => {
+  const tokenParts = token.split(":");
+  if (tokenParts.length !== 3) {
+    throw new Error(invalidSessionKeyMessage);
+  }
+  const sessionIdentifier = tokenParts.slice(0, 2).join(":");
+  const key = tokenParts[2];
+  const keyHash = hashData(key);
+
+  return { sessionIdentifier, keyHash };
+};
+
 const invalidSessionKeyMessage = "Invalid session key";
+
+interface DecodedSessionToken {
+  sessionIdentifier: string;
+  keyHash: string;
+}
 
 export type SessionToken = string;
 
