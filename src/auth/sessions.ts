@@ -8,7 +8,7 @@ import { randomBase64Url } from "@/utils/randomUtils";
  * userId. Function saves session hash to database, but does not preserve session key-
  * once its sent to user server should acquire no knoweledge about its content */
 export const generateToken = async (userId: UserID): Promise<string> => {
-  const key = randomBase64Url(length);
+  const key = randomBase64Url(48);
   const hash = hashData(key);
   const randomString = randomBase64Url(8);
   const sessionIdentifier = `${userId}:${randomString}`;
@@ -36,7 +36,7 @@ export const getUserIdFromToken = async (
   const key = tokenParts[2];
   const keyHash = hashData(key);
 
-  const redisResponse = await redis.getAsync(`session${sessionIdentifier}`);
+  const redisResponse = await redis.getAsync(`session:${sessionIdentifier}`);
 
   if (!redisResponse || redisResponse === null) {
     throw new Error(invalidSessionKeyMessage);
