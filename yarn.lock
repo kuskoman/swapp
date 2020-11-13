@@ -571,7 +571,15 @@
     ts-node "^9"
     tslib "^2"
 
-"@graphql-codegen/cli@^1.19.1":
+"@graphql-codegen/add@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@graphql-codegen/add/-/add-2.0.1.tgz#b2cf2ef0e2c83f49dfa1f6a52fee94dfb47e296f"
+  integrity sha512-P8+PTHMrNdR/FJn+AQmLtba76H57E5R82Qw8QsntYUYAPUPXOIy4bn3v0rzcrkOnFHanTFjckNcLCF7khEHwJQ==
+  dependencies:
+    "@graphql-codegen/plugin-helpers" "^1.17.8"
+    tslib "~2.0.0"
+
+"@graphql-codegen/cli@1.19.1":
   version "1.19.1"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/cli/-/cli-1.19.1.tgz#2f4ad535f3106af1f3b2422878d78405c556c1c1"
   integrity sha512-8ZJLyBZInVmeyEQIj4WEd832SyRuvg0iEzq5RBBqNtrgl7/5ehcnDd9gVLY+eGAsKl9oag/p5kKTJJc8Fw49Aw==
@@ -631,7 +639,7 @@
     "@graphql-tools/utils" "^6.0.18"
     tslib "~2.0.0"
 
-"@graphql-codegen/introspection@^1.18.0":
+"@graphql-codegen/introspection@1.18.0":
   version "1.18.0"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/introspection/-/introspection-1.18.0.tgz#68d5b29d5ee3229510a5f1c382d1046a40d87dc7"
   integrity sha512-I/58V5eSsTW+OMaVA6NdJkc5YgZwLN8dKKPZTq0VgVfbWMZ6SsYbQBY58RnnTE8MRaqvF4/+wYUcnTKxNAosxw==
@@ -668,7 +676,7 @@
     auto-bind "~4.0.0"
     tslib "~2.0.1"
 
-"@graphql-codegen/typescript@^1.17.10", "@graphql-codegen/typescript@^1.17.11":
+"@graphql-codegen/typescript@1.17.11", "@graphql-codegen/typescript@^1.17.10":
   version "1.17.11"
   resolved "https://registry.yarnpkg.com/@graphql-codegen/typescript/-/typescript-1.17.11.tgz#9bcc00580b36e8c98e7cc565dbccaf1b8b8ce85d"
   integrity sha512-cZsuOWpPWWHX7IIv2xMbrI/AZOiv+wEzyGpoGFV8zU6vjs54C50gb7Chhj9XPjMbOhUQ+z3Pn01geTRvi1gDeA==
