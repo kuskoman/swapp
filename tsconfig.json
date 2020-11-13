@@ -9,6 +9,7 @@
       "@/*": ["src/*"],
     },
     "allowJs": false,
+    "sourceMap": true,
     "removeComments": true,
     "strict": true,
     "noImplicitAny": true,
