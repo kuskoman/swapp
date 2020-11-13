@@ -1,13 +1,14 @@
 import { getUserId } from "@/auth/authorizeApiRequest";
 import { generateToken } from "@/auth/sessions";
 
-const validUserId = "validUser";
 let validToken: string,
   validRequestMock: RequestMock,
   validRequestMockWithBearerKeyword: RequestMock,
   invalidRequestMock: RequestMock;
 
 beforeAll(async () => {
+  const validUserId = "validUser";
+
   validToken = await generateToken(validUserId);
 
   validRequestMock = {
