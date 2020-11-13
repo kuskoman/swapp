@@ -6,5 +6,11 @@ export const randomBase64 = (length: number): string => {
 
 export const randomBase64Url = (length: number): string => {
   const baseString = randomBase64(length);
-  return baseString.replace(/\+/g, "-").replace(/\//g, "_").replace(/\=+$/, "");
+  const urlEncodedString = normalizeBase64ToUrl(baseString);
+
+  return urlEncodedString;
+};
+
+export const normalizeBase64ToUrl = (b64String: string): string => {
+  return b64String.replace(/\+/g, "-").replace(/\//g, "_").replace(/\=+$/, "");
 };
