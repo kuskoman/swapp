@@ -1,6 +1,6 @@
 import { createUser, CreateUserInput } from "@/services/user.service";
 import { comparePasswordHash } from "@/utils/passwordUtils";
-import { ValidationError } from "class-validator";
+import { ValidationError } from "@/utils/validationUtils";
 
 describe("createUser function", () => {
   it("creates user when data is valid", async () => {
