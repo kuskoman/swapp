@@ -5,7 +5,7 @@ import { GraphQLError } from "graphql";
 export const SWAPI_BASE_URL = "https://swapi.dev/api/";
 
 export const callStartwarsApi = async <T>(resource: string): Promise<T> => {
-  const uri = resource.split("/").join("/");
+  const uri = getUriForResource(resource);
   const cachedResponse = await getCachedResponse<T>(uri);
   if (cachedResponse) {
     return cachedResponse;
@@ -25,6 +25,13 @@ export const callStartwarsApi = async <T>(resource: string): Promise<T> => {
   redis.setAsync(key, stringifiedResponseData);
 
   return data;
+};
+
+export const getUriForResource = (resource: string): string => {
+  const normalizedResource = resource.split("/").join("/");
+  const uri = `${SWAPI_BASE_URL}${normalizedResource}/`;
+
+  return uri;
 };
 
 const getCachedResponse = async <T>(uri: string): Promise<T | null> => {
