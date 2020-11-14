@@ -1,5 +1,6 @@
 import { User } from "@/entities/user.entity";
 import getConnection from "@/orm";
+import { UserID } from "@/types";
 import {
   comparePasswordHash,
   hashPassword,
@@ -49,6 +50,11 @@ export const authorizeUser = async ({
   }
 
   return user;
+};
+
+export const getUser = async (id: UserID) => {
+  const repository = await getRepository();
+  return repository.findOne(id);
 };
 
 const checkUserUniqueness = async (email: string) => {

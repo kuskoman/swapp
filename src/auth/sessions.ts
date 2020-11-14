@@ -43,7 +43,7 @@ export const getUserIdFromToken = async (
   return sessionInfo.userId;
 };
 
-const stringifySessionInfo = (hash: string, userId: string): string => {
+const stringifySessionInfo = (hash: string, userId: UserID): string => {
   const sessionInfo: SessionInfo = {
     hash,
     userId,
