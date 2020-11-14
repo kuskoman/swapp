@@ -19,7 +19,7 @@ export const createUser = async ({
   const user = new User();
   user.email = email;
   user.password_digest = passwordDigest;
-  user.hero_id = 4; // random number choosen by a dick roll. TODO: change later
+  user.hero_uri = "https://swapi.dev/api/people/8/"; // random number choosen by a dick roll. TODO: change later
 
   await validateClassObject(user);
 
