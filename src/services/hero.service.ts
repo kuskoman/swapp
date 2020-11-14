@@ -1,3 +1,4 @@
+import { randomInt } from "@/utils/randomUtils";
 import { PaginationResponse } from "@/utils/swApiUtils";
 import { callStartwarsApi } from "./starWars.service";
 
@@ -22,6 +23,15 @@ export const getHeroesCount = async (): Promise<number> => {
   const numberOfHeroes = heroesPage.count;
 
   return numberOfHeroes;
+};
+
+export const getRandomHero = async (): Promise<HeroResponse> => {
+  const count = await getHeroesCount();
+  const randomHeroId = randomInt(count);
+
+  const hero = await getHero(randomHeroId);
+
+  return hero;
 };
 
 export interface HeroResponse {

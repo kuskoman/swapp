@@ -14,3 +14,7 @@ export const randomBase64Url = (length: number): string => {
 export const normalizeBase64ToUrl = (b64String: string): string => {
   return b64String.replace(/\+/g, "-").replace(/\//g, "_").replace(/\=+$/, "");
 };
+
+export const randomInt = (max: number) => {
+  return Math.floor(Math.random() * max);
+};
