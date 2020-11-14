@@ -1,11 +1,16 @@
+import redis from "@/redis";
 import axios, { AxiosResponse } from "axios";
 import { GraphQLError } from "graphql";
 
 export const SWAPI_BASE_URL = "https://swapi.dev/api/";
 
-export const callStartwarsApi = async <T>(
-  resource: string
-): Promise<AxiosResponse<T>> => {
+export const callStartwarsApi = async <T>(resource: string): Promise<T> => {
+  const uri = resource.split("/").join("/");
+  const cachedResponse = await getCachedResponse<T>(uri);
+  if (cachedResponse) {
+    return cachedResponse;
+  }
+
   let response: AxiosResponse<T>;
 
   try {
@@ -14,8 +19,26 @@ export const callStartwarsApi = async <T>(
     throw new ExternalServiceError();
   }
 
-  return response;
+  const { data } = response;
+  const stringifiedResponseData = JSON.stringify(response);
+  const key = redisKey(uri);
+  redis.setAsync(key, stringifiedResponseData);
+
+  return data;
 };
+
+const getCachedResponse = async <T>(uri: string): Promise<T | null> => {
+  const key = redisKey(uri);
+  const cachedResponse = await redis.getAsync(key);
+  if (cachedResponse) {
+    const parsedResponse = JSON.parse(cachedResponse);
+    return parsedResponse;
+  }
+
+  return null;
+};
+
+const redisKey = (uri: string) => `swapi:${uri}`;
 
 export class ExternalServiceError extends GraphQLError {
   constructor() {
