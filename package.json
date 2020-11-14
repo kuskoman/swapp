@@ -9,7 +9,10 @@
     "build": "ttsc --p tsconfig.src.json",
     "start": "ts-node --compiler ttypescript src/index.ts",
     "test": "jest",
-    "types:generate": "graphql-codegen --config codegen.yml"
+    "types:generate": "graphql-codegen --config codegen.yml",
+    "migration:create": "typeorm migration:create -d src/migrations -n",
+    "migration:run": "typeorm migration:run",
+    "migration:run:test-db": "cross-env NODE_ENV=test ts-node ./node_modules/typeorm/cli.js migration:run"
   },
   "dependencies": {
     "@graphql-tools/graphql-file-loader": "^6.2.5",
