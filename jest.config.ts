@@ -10,6 +10,8 @@ const config: Config.InitialOptions = {
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
   },
+  globalSetup: "./test/setup/setup.ts",
+  globalTeardown: "./test/setup/teardown.ts",
 };
 
 export default config;
