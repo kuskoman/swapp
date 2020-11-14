@@ -27,8 +27,18 @@ export const callStartwarsApi = async <T>(resource: string): Promise<T> => {
   return data;
 };
 
+// if it looks stupid but works, it isn't stupid
 export const getUriForResource = (resource: string): string => {
-  const normalizedResource = resource.split("/").join("/");
+  const normalizedResource = resource
+    .split("/")
+    .filter((v) => v !== "")
+    .join("/");
+
+  if (normalizedResource.includes("?")) {
+    const uri = SWAPI_BASE_URL + normalizedResource;
+    return uri;
+  }
+
   const uri = `${SWAPI_BASE_URL}${normalizedResource}/`;
 
   return uri;
@@ -38,7 +48,7 @@ const getCachedResponse = async <T>(uri: string): Promise<T | null> => {
   const key = redisKey(uri);
   const cachedResponse = await redis.getAsync(key);
   if (cachedResponse) {
-    const parsedResponse = JSON.parse(cachedResponse);
+    const parsedResponse: T = JSON.parse(cachedResponse);
     return parsedResponse;
   }
 
