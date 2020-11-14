@@ -1,7 +1,12 @@
 import { Connection, createConnection } from "typeorm";
 
-const getConnection = (): Promise<Connection> => {
-  return createConnection();
+let connection: Connection;
+
+const getConnection = async (): Promise<Connection> => {
+  if (!connection) {
+    connection = await createConnection();
+  }
+  return connection;
 };
 
 export default getConnection;
