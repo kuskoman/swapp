@@ -7,8 +7,8 @@ module.exports = {
   database: process.env.NODE_ENV === "test" ? "test" : "sw",
   entities: [
     process.env.NODE_ENV === "production"
-      ? "./dist/**/*.entity.js"
-      : "./src/**/*.entity.ts",
+      ? "./dist/entities/*.entity.js"
+      : "./src/entities/*.entity.ts",
   ],
   synchronize: false,
   migrationsRun: process.env.NODE_ENV === "development",
