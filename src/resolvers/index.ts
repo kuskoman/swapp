@@ -1,3 +1,5 @@
+import { resolvers as scalars } from "graphql-scalars";
+
 import authMutations from "./mutations/auth";
 
 const resolvers = {
@@ -5,6 +7,7 @@ const resolvers = {
     ...authMutations,
   },
   Query: {},
+  ...scalars,
 };
 
 export default resolvers;

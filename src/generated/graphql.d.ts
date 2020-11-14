@@ -1,4 +1,4 @@
-import { GraphQLResolveInfo } from 'graphql';
+import { GraphQLResolveInfo, GraphQLScalarType, GraphQLScalarTypeConfig } from 'graphql';
 import { User as UserModel } from './entities/user.entity';
 export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -11,6 +11,7 @@ export type Scalars = {
   Boolean: boolean;
   Int: number;
   Float: number;
+  DateTime: any;
 };
 
 export type Mutation = {
@@ -44,6 +45,21 @@ export type AuthInput = {
   email: Scalars['String'];
   password: Scalars['String'];
 };
+
+export type Hero = {
+  __typename?: 'Hero';
+  name: Scalars['String'];
+  height: Scalars['String'];
+  mass: Scalars['String'];
+  hair_color: Scalars['String'];
+  skin_color: Scalars['String'];
+  eye_color: Scalars['String'];
+  birth_year: Scalars['String'];
+  gender: Scalars['String'];
+  created: Scalars['DateTime'];
+  edited: Scalars['DateTime'];
+};
+
 
 export type User = {
   __typename?: 'User';
@@ -134,6 +150,8 @@ export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars['String']>;
   AuthPayload: ResolverTypeWrapper<Omit<AuthPayload, 'user'> & { user: ResolversTypes['User'] }>;
   AuthInput: AuthInput;
+  Hero: ResolverTypeWrapper<Hero>;
+  DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
   User: ResolverTypeWrapper<UserModel>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
@@ -145,6 +163,8 @@ export type ResolversParentTypes = {
   String: Scalars['String'];
   AuthPayload: Omit<AuthPayload, 'user'> & { user: ResolversParentTypes['User'] };
   AuthInput: AuthInput;
+  Hero: Hero;
+  DateTime: Scalars['DateTime'];
   User: UserModel;
   Boolean: Scalars['Boolean'];
 };
@@ -164,6 +184,24 @@ export type AuthPayloadResolvers<ContextType = any, ParentType extends Resolvers
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type HeroResolvers<ContextType = any, ParentType extends ResolversParentTypes['Hero'] = ResolversParentTypes['Hero']> = {
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  height?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  mass?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  hair_color?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  skin_color?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  eye_color?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  birth_year?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  gender?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  created?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  edited?: Resolver<ResolversTypes['DateTime'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['DateTime'], any> {
+  name: 'DateTime';
+}
+
 export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -174,6 +212,8 @@ export type Resolvers<ContextType = any> = {
   Mutation?: MutationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   AuthPayload?: AuthPayloadResolvers<ContextType>;
+  Hero?: HeroResolvers<ContextType>;
+  DateTime?: GraphQLScalarType;
   User?: UserResolvers<ContextType>;
 };
 
