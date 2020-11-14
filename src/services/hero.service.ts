@@ -1,3 +1,4 @@
+import { PaginationResponse } from "@/utils/swApiUtils";
 import { callStartwarsApi } from "./starWars.service";
 
 const BASE_HEROES_PATH = "people/";
@@ -33,11 +34,6 @@ export interface HeroResponse {
   starships: string;
 }
 
-export interface HeroPageResponse {
-  count: number;
-  next: string | null;
-  previous: string | null;
-  results: HeroResponse[];
-}
+export type HeroPageResponse = PaginationResponse<HeroResponse>;
 
 export type Gender = "male" | "female" | "n/a" | string; // this makes sense only for autocompletion
