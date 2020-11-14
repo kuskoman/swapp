@@ -23,6 +23,7 @@ export const callStartwarsApi = async <T>(resource: string): Promise<T> => {
   const stringifiedResponseData = JSON.stringify(response);
   const key = redisKey(uri);
   redis.setAsync(key, stringifiedResponseData);
+  redis.expire(key, 60 * 60 * 24);
 
   return data;
 };
