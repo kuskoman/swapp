@@ -1,4 +1,5 @@
 import redis from "@/redis";
+import { notEmptyString } from "@/utils/arrayUtils";
 import { BaseResponse, PaginationResponse } from "@/utils/swApiUtils";
 import axios, { AxiosResponse } from "axios";
 import { GraphQLError } from "graphql";
@@ -31,7 +32,7 @@ export const callStartwarsApi = async <T>(resource: string): Promise<T> => {
 export const getUriForResource = (resource: string): string => {
   const normalizedResource = resource
     .split("/")
-    .filter((v) => v !== "")
+    .filter(notEmptyString)
     .join("/");
 
   if (normalizedResource.includes("?")) {
@@ -45,10 +46,7 @@ export const getUriForResource = (resource: string): string => {
 };
 
 export const findUriType = (uri: string): UriType => {
-  const lastPart = uri
-    .split("/")
-    .filter((v) => v !== "")
-    .slice(-1)[0];
+  const lastPart = uri.split("/").filter(notEmptyString).slice(-1)[0];
 
   if (lastPart.includes("?")) {
     return "pagination";
