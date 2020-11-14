@@ -4,7 +4,7 @@ module.exports = {
   port: Number(process.env.DB_PORT) || 4001,
   username: process.env.DB_USER || "sw",
   password: process.env.DB_PASS || "sw",
-  database: process.env.NODE_ENV === "test" ? "test" : "sw",
+  database: process.env.NODE_ENV === "test" ? "test" : "starwars",
   entities: [
     process.env.NODE_ENV === "production"
       ? "./dist/entities/*.entity.js"
