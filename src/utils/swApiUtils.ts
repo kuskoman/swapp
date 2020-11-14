@@ -4,3 +4,7 @@ export type PaginationResponse<T> = {
   previous: string | null;
   results: T[];
 };
+
+export interface BaseResponse {
+  url: string;
+}

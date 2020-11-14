@@ -1,4 +1,5 @@
 import redis from "@/redis";
+import { BaseResponse, PaginationResponse } from "@/utils/swApiUtils";
 import axios, { AxiosResponse } from "axios";
 import { GraphQLError } from "graphql";
 
@@ -6,6 +7,7 @@ export const SWAPI_BASE_URL = "https://swapi.dev/api/";
 
 export const callStartwarsApi = async <T>(resource: string): Promise<T> => {
   const uri = getUriForResource(resource);
+  const type = findUriType(uri);
   const cachedResponse = await getCachedResponse<T>(uri);
   if (cachedResponse) {
     return cachedResponse;
@@ -20,10 +22,7 @@ export const callStartwarsApi = async <T>(resource: string): Promise<T> => {
   }
 
   const { data } = response;
-  const stringifiedResponseData = JSON.stringify(response);
-  const key = redisKey(uri);
-  redis.setAsync(key, stringifiedResponseData);
-  redis.expire(key, 60 * 60 * 24);
+  saveResponse(uri, data, type);
 
   return data;
 };
@@ -43,6 +42,32 @@ export const getUriForResource = (resource: string): string => {
   const uri = `${SWAPI_BASE_URL}${normalizedResource}/`;
 
   return uri;
+};
+
+export const findUriType = (uri: string): UriType => {
+  const lastPart = uri
+    .split("/")
+    .filter((v) => v !== "")
+    .slice(-1)[0];
+
+  if (lastPart.includes("?")) {
+    return "pagination";
+  }
+
+  return "single";
+};
+
+const saveResponse = async (uri: string, data: Object, type: UriType) => {
+  const stringifiedResponseData = JSON.stringify(data);
+  const key = redisKey(uri);
+  redis.setAsync(key, stringifiedResponseData);
+  redis.expire(key, 60 * 60 * 24);
+
+  if (type === "pagination") {
+    (data as PaginationResponse<BaseResponse>).results.forEach((result) => {
+      saveResponse(result.url, result, "single");
+    });
+  }
 };
 
 const getCachedResponse = async <T>(uri: string): Promise<T | null> => {
@@ -65,3 +90,5 @@ export class ExternalServiceError extends GraphQLError {
     Object.setPrototypeOf(this, ExternalServiceError.prototype);
   }
 }
+
+export type UriType = "single" | "pagination";
