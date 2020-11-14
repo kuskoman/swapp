@@ -15,5 +15,5 @@ export class User {
   password_digest!: string;
 
   @Column()
-  hero_id!: number;
+  hero_uri!: string;
 }
