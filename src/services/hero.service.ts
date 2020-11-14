@@ -2,7 +2,7 @@ import { randomInt } from "@/utils/randomUtils";
 import { PaginationResponse } from "@/utils/swApiUtils";
 import { callStartwarsApi } from "./starWars.service";
 
-const BASE_HEROES_PATH = "people/";
+export const BASE_HEROES_PATH = "people/";
 
 export const getHero = async (id: string | number) => {
   const resourcePath = `${BASE_HEROES_PATH}/${id}`;
@@ -46,9 +46,9 @@ export interface HeroResponse {
   created: string;
   edited: string;
   homeworld: string;
-  films: string;
-  vehicles: string;
-  starships: string;
+  films: string[];
+  vehicles: string[];
+  starships: string[];
 }
 
 export type HeroPageResponse = PaginationResponse<HeroResponse>;

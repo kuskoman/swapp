@@ -1,0 +1,27 @@
+import { callStartwarsApi } from "./starWars.service";
+
+export const BASE_FILMS_PATH = "films/";
+
+export const getFilm = async (id: string | number) => {
+  const resourcePath = `${BASE_FILMS_PATH}/${id}`;
+  const heroData = await callStartwarsApi<FilmResponse>(resourcePath);
+
+  return heroData;
+};
+
+export interface FilmResponse {
+  characters: string[];
+  created: string;
+  director: string;
+  edited: string;
+  episode_id: number;
+  opening_crawl: string;
+  planets: [];
+  producer: string;
+  relase_date: string;
+  species: string[];
+  starships: string[];
+  title: string;
+  url: string;
+  vehicles: string[];
+}
