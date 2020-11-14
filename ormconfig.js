@@ -6,9 +6,9 @@ module.exports = {
   password: process.env.DB_PASS || "sw",
   database: process.env.NODE_ENV === "test" ? "test" : "sw",
   entities: [
-    process.env.NODE_ENV === "test"
-      ? "./src/**/*.entity.ts"
-      : "./dist/**/*.entity.js",
+    process.env.NODE_ENV === "production"
+      ? "./dist/**/*.entity.js"
+      : "./src/**/*.entity.ts",
   ],
   synchronize: false,
   migrationsRun: process.env.NODE_ENV === "development",
