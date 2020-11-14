@@ -1,8 +1,6 @@
-import { Resolvers } from "@/generated/graphql";
-
 import authMutations from "./mutations/auth";
 
-const resolvers: Resolvers = {
+const resolvers = {
   Mutation: {
     ...authMutations,
   },
