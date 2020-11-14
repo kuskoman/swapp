@@ -1,12 +1,17 @@
 import { User } from "@/entities/user.entity";
 import getConnection from "@/orm";
-import { hashPassword, validatePassword } from "@/utils/passwordUtils";
+import {
+  comparePasswordHash,
+  hashPassword,
+  validatePassword,
+} from "@/utils/passwordUtils";
 import ValidationError, { validateClassObject } from "@/utils/validationUtils";
+import { GraphQLError } from "graphql";
 
 export const createUser = async ({
   email,
   password,
-}: CreateUserInput): Promise<User> => {
+}: UserAuthInput): Promise<User> => {
   validatePassword(password);
   await checkUserUniqueness(email);
   const passwordDigest = await hashPassword(password);
@@ -20,6 +25,30 @@ export const createUser = async ({
 
   const repository = await getRepository();
   return repository.save(user);
+};
+
+export const authorizeUser = async ({
+  email,
+  password,
+}: UserAuthInput): Promise<User> => {
+  const repository = await getRepository();
+  const user = await repository.findOne({ email });
+  const errorMessage = "Invalid email or password";
+
+  if (!user) {
+    throw new GraphQLError(errorMessage); // we do not want to allow checking if email exist in our db
+  }
+
+  const passwordValid = await comparePasswordHash(
+    password,
+    user.password_digest
+  );
+
+  if (!passwordValid) {
+    throw new Error(errorMessage);
+  }
+
+  return user;
 };
 
 const checkUserUniqueness = async (email: string) => {
@@ -36,7 +65,7 @@ const getRepository = async () => {
   const connection = await getConnection();
   return connection.getRepository(User);
 };
-export interface CreateUserInput {
+export interface UserAuthInput {
   email: string;
   password: string;
 }

@@ -1,4 +1,4 @@
-import { createUser, CreateUserInput } from "@/services/user.service";
+import { createUser, UserAuthInput } from "@/services/user.service";
 import { comparePasswordHash } from "@/utils/passwordUtils";
 import { ValidationError } from "@/utils/validationUtils";
 
@@ -7,7 +7,7 @@ describe("createUser function", () => {
     const email = "pezet@magenta.tld";
     const password = "bubblegumRoz";
 
-    const userInput: CreateUserInput = {
+    const userInput: UserAuthInput = {
       email,
       password,
     };
@@ -22,7 +22,7 @@ describe("createUser function", () => {
   });
 
   it("throws an error when email is invalid", async () => {
-    const wrongInput: CreateUserInput = {
+    const wrongInput: UserAuthInput = {
       email: "notAnEmail",
       password: "a valid password",
     };
@@ -31,7 +31,7 @@ describe("createUser function", () => {
   });
 
   it("throws an error when password is too short", async () => {
-    const wrongInput: CreateUserInput = {
+    const wrongInput: UserAuthInput = {
       email: "valid@email.tld",
       password: "1".repeat(3),
     };
@@ -40,7 +40,7 @@ describe("createUser function", () => {
   });
 
   it("throws an error when email already exists", async () => {
-    const doubledData: CreateUserInput = {
+    const doubledData: UserAuthInput = {
       email: "exists@example.tld",
       password: "validPassword",
     };
