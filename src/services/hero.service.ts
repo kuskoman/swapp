@@ -16,4 +16,28 @@ export const getHeroesPage = async (pageNumber: number | string = 1) => {
   return heroesPage;
 };
 
+export interface HeroResponse {
+  name: string;
+  height: string;
+  mass: string;
+  hair_color: string;
+  skin_color: string;
+  eye_color: string;
+  birth_year: string;
+  gender: Gender;
+  created: string;
+  edited: string;
+  homeworld: string;
+  films: string;
+  vehicles: string;
+  starships: string;
+}
+
+export interface HeroPageResponse {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: HeroResponse[];
+}
+
 export type Gender = "male" | "female" | "n/a" | string; // this makes sense only for autocompletion
