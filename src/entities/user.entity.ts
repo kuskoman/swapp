@@ -1,4 +1,4 @@
-import { IsEmail } from "class-validator";
+import { IsEmail, MaxLength } from "class-validator";
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
 
 @Entity("users")
@@ -7,6 +7,7 @@ export class User extends BaseEntity {
   id!: number;
 
   @IsEmail()
+  @MaxLength(255)
   @Column()
   email!: string;
 
