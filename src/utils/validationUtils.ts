@@ -20,6 +20,7 @@ export class ValidationError extends GraphQLError {
   constructor(errors: ValidationErrorInfo[]) {
     super("The input is invalid");
     this.state = errors;
+    Object.setPrototypeOf(this, ValidationError.prototype);
   }
 }
 
