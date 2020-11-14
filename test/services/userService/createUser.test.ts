@@ -38,4 +38,14 @@ describe("createUser function", () => {
 
     await expect(createUser(wrongInput)).rejects.toThrow(ValidationError);
   });
+
+  it("throws an error when email already exists", async () => {
+    const doubledData: CreateUserInput = {
+      email: "exists@example.tld",
+      password: "validPassword",
+    };
+
+    await createUser(doubledData);
+    await expect(createUser(doubledData)).rejects.toThrow(ValidationError);
+  });
 });
