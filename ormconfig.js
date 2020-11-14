@@ -12,7 +12,7 @@ module.exports = {
   ],
   synchronize: false,
   migrationsRun: process.env.NODE_ENV === "development",
-  logging: true,
+  logging: process.env.NODE_ENV !== "test",
   migrations: ["./dist/migrations/**/*.js"],
   cli: {
     migrationsDir: "src/migrations",

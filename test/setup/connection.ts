@@ -9,7 +9,7 @@ export const getConnection = async (): Promise<Connection> => {
     username: config.username,
     password: config.password,
     database: "test",
-    logging: true,
+    logging: ["error"],
     migrations: config.migrations,
   });
 
