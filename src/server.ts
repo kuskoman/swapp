@@ -5,7 +5,7 @@ import schema from "./schema";
 import { getUser } from "./services/user.service";
 
 const server = express();
-server.use("/graphql", (req) => {
+server.use("/graphql", (req, resp) => {
   return graphqlHTTP({
     schema,
     graphiql: true,
@@ -15,7 +15,7 @@ server.use("/graphql", (req) => {
         return getUser(userId);
       },
     },
-  });
+  })(req, resp);
 });
 
 export default server;
