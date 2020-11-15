@@ -1,5 +1,7 @@
+import logger from "@/logger";
 import redis from "@/redis";
 import { notEmptyString } from "@/utils/arrayUtils";
+import { ResourceNotFoundError } from "@/utils/requestUtils";
 import { BaseResponse, PaginationResponse } from "@/utils/swApiUtils";
 import axios, { AxiosResponse } from "axios";
 
@@ -22,6 +24,12 @@ export const rawCallStarwarsApi = async <T>(uri: string): Promise<T> => {
   try {
     response = await axios.get<T>(uri);
   } catch (e) {
+    if (e.response.status == 404) {
+      throw new ResourceNotFoundError();
+    }
+    logger.error(
+      `Error when calling external resource (${uri}): ${e.statusText}`
+    );
     throw new ExternalServiceError();
   }
 

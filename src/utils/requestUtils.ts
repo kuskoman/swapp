@@ -31,6 +31,14 @@ export class AuthError extends Error {
   }
 }
 
+export class ResourceNotFoundError extends Error {
+  constructor() {
+    super("Resource not found");
+    this.name = "ResourceNotFoundError";
+    Object.setPrototypeOf(this, ResourceNotFoundError.prototype);
+  }
+}
+
 export interface RequestLikeWithAuthHeaders {
   headers?: {
     authorization?: string;
