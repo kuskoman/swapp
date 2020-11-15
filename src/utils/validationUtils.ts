@@ -1,3 +1,4 @@
+import { UserInputError } from "apollo-server";
 import { validate } from "class-validator";
 
 export const validateClassObject = async (obj: Object) => {
@@ -14,7 +15,7 @@ export const validateClassObject = async (obj: Object) => {
   }
 };
 
-export class ValidationError extends Error {
+export class ValidationError extends UserInputError {
   state: ValidationErrorInfo[];
   constructor(errors: ValidationErrorInfo[]) {
     super("The input is invalid");

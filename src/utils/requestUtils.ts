@@ -1,4 +1,5 @@
 import { SessionToken } from "@/auth/sessions";
+import { ApolloError, AuthenticationError } from "apollo-server";
 
 export const getAuthorizationToken = (
   request: RequestLikeWithAuthHeaders
@@ -23,18 +24,16 @@ export const extractBearerToken = (token: string): SessionToken => {
   return token;
 };
 
-export class AuthError extends Error {
+export class AuthError extends AuthenticationError {
   constructor() {
     super("Not authorized");
-    this.name = "AuthError";
     Object.setPrototypeOf(this, AuthError.prototype);
   }
 }
 
-export class ResourceNotFoundError extends Error {
+export class ResourceNotFoundError extends ApolloError {
   constructor() {
     super("Resource not found");
-    this.name = "ResourceNotFoundError";
     Object.setPrototypeOf(this, ResourceNotFoundError.prototype);
   }
 }

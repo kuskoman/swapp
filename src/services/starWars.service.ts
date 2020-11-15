@@ -3,6 +3,7 @@ import redis from "@/redis";
 import { notEmptyString } from "@/utils/arrayUtils";
 import { ResourceNotFoundError } from "@/utils/requestUtils";
 import { BaseResponse, PaginationResponse } from "@/utils/swApiUtils";
+import { ApolloError } from "apollo-server";
 import axios, { AxiosResponse } from "axios";
 
 export const SWAPI_BASE_URL = "http://swapi.dev/api/";
@@ -94,10 +95,9 @@ const getCachedResponse = async <T>(uri: string): Promise<T | null> => {
 
 const redisKey = (uri: string) => `swapi:${uri}`;
 
-export class ExternalServiceError extends Error {
+export class ExternalServiceError extends ApolloError {
   constructor() {
     super("Error of external service");
-    this.name = "ExternalServiceError";
     Object.setPrototypeOf(this, ExternalServiceError.prototype);
   }
 }
