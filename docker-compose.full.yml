@@ -1,0 +1,30 @@
+version: "3.7"
+services:
+  postgres:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: sw
+      POSTGRES_PASSWORD: sw
+    volumes:
+      - postgres:/var/lib/postgresql/data
+      - ./db_init.sql:/docker-entrypoint-initdb.d/init.sql
+  redis:
+    image: redis
+    restart: always
+    volumes:
+        - ./redis.conf:/usr/local/etc/redis/redis.conf
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      DB_PORT: 5432
+      DB_HOST: postgres
+
+volumes:
+  postgres:
