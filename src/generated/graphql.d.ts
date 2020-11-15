@@ -31,11 +31,6 @@ export type MutationLoginArgs = {
   input: AuthInput;
 };
 
-export type Query = {
-  __typename?: 'Query';
-  worldHello?: Maybe<Scalars['String']>;
-};
-
 export type AuthPayload = {
   __typename?: 'AuthPayload';
   token: Scalars['String'];
@@ -45,6 +40,11 @@ export type AuthPayload = {
 export type AuthInput = {
   email: Scalars['String'];
   password: Scalars['String'];
+};
+
+export type Query = {
+  __typename?: 'Query';
+  hero: Hero;
 };
 
 export type Hero = {
@@ -147,10 +147,10 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>;
-  Query: ResolverTypeWrapper<{}>;
-  String: ResolverTypeWrapper<Scalars['String']>;
   AuthPayload: ResolverTypeWrapper<Omit<AuthPayload, 'user'> & { user: ResolversTypes['User'] }>;
+  String: ResolverTypeWrapper<Scalars['String']>;
   AuthInput: AuthInput;
+  Query: ResolverTypeWrapper<{}>;
   Hero: ResolverTypeWrapper<Hero>;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
   User: ResolverTypeWrapper<UserModel>;
@@ -160,10 +160,10 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Mutation: {};
-  Query: {};
-  String: Scalars['String'];
   AuthPayload: Omit<AuthPayload, 'user'> & { user: ResolversParentTypes['User'] };
+  String: Scalars['String'];
   AuthInput: AuthInput;
+  Query: {};
   Hero: Hero;
   DateTime: Scalars['DateTime'];
   User: UserModel;
@@ -175,14 +175,14 @@ export type MutationResolvers<ContextType = Context, ParentType extends Resolver
   login?: Resolver<ResolversTypes['AuthPayload'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'input'>>;
 };
 
-export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  worldHello?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-};
-
 export type AuthPayloadResolvers<ContextType = Context, ParentType extends ResolversParentTypes['AuthPayload'] = ResolversParentTypes['AuthPayload']> = {
   token?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  hero?: Resolver<ResolversTypes['Hero'], ParentType, ContextType>;
 };
 
 export type HeroResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Hero'] = ResolversParentTypes['Hero']> = {
@@ -211,8 +211,8 @@ export type UserResolvers<ContextType = Context, ParentType extends ResolversPar
 
 export type Resolvers<ContextType = Context> = {
   Mutation?: MutationResolvers<ContextType>;
-  Query?: QueryResolvers<ContextType>;
   AuthPayload?: AuthPayloadResolvers<ContextType>;
+  Query?: QueryResolvers<ContextType>;
   Hero?: HeroResolvers<ContextType>;
   DateTime?: GraphQLScalarType;
   User?: UserResolvers<ContextType>;

@@ -3,10 +3,6 @@ type Mutation {
   login(input: AuthInput!): AuthPayload!
 }
 
-type Query {
-  worldHello: String
-}
-
 type AuthPayload {
   token: String!
   user: User!
