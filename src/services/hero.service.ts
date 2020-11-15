@@ -4,7 +4,7 @@ import { callStartwarsApi } from "./starWars.service";
 
 export const BASE_HEROES_PATH = "people/";
 
-export const getHero = async (id: string | number) => {
+export const getHeroById = async (id: string | number) => {
   const resourcePath = `${BASE_HEROES_PATH}/${id}`;
   const heroData = await callStartwarsApi<HeroResponse>(resourcePath);
 
@@ -29,7 +29,7 @@ export const getRandomHero = async (): Promise<HeroResponse> => {
   const count = await getHeroesCount();
   const randomHeroId = randomInt(count);
 
-  const hero = await getHero(randomHeroId);
+  const hero = await getHeroById(randomHeroId);
 
   return hero;
 };

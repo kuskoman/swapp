@@ -8,6 +8,10 @@ export const SWAPI_BASE_URL = "https://swapi.dev/api/";
 
 export const callStartwarsApi = async <T>(resource: string): Promise<T> => {
   const uri = getUriForResource(resource);
+  return rawCallStarwarsApi(uri);
+};
+
+export const rawCallStarwarsApi = async <T>(uri: string): Promise<T> => {
   const type = findUriType(uri);
   const cachedResponse = await getCachedResponse<T>(uri);
   if (cachedResponse) {
@@ -17,7 +21,7 @@ export const callStartwarsApi = async <T>(resource: string): Promise<T> => {
   let response: AxiosResponse<T>;
 
   try {
-    response = await axios.get<T>(`${SWAPI_BASE_URL}${resource}`);
+    response = await axios.get<T>(uri);
   } catch (e) {
     throw new ExternalServiceError();
   }
