@@ -1,5 +1,5 @@
 type Query {
-  hero: Hero!
+  hero(id: ID): Hero!
 }
 
 type Hero {

@@ -4,7 +4,7 @@ import { BaseResponse, PaginationResponse } from "@/utils/swApiUtils";
 import axios, { AxiosResponse } from "axios";
 import { GraphQLError } from "graphql";
 
-export const SWAPI_BASE_URL = "https://swapi.dev/api/";
+export const SWAPI_BASE_URL = "http://swapi.dev/api/";
 
 export const callStartwarsApi = async <T>(resource: string): Promise<T> => {
   const uri = getUriForResource(resource);
