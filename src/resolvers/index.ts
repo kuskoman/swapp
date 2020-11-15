@@ -4,6 +4,7 @@ import authMutations from "./mutations/auth";
 
 import heroQueries from "./queries/hero";
 import filmQueries from "./queries/film";
+import specieQueries from "./queries/specie";
 
 const resolvers = {
   Mutation: {
@@ -12,6 +13,7 @@ const resolvers = {
   Query: {
     ...heroQueries,
     ...filmQueries,
+    ...specieQueries,
   },
   ...scalars,
 };
