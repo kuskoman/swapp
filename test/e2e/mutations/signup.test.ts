@@ -41,6 +41,9 @@ describe("Signup mutation", () => {
     const userData = signupData?.user;
     const receivedEmail = userData?.email;
     const expectedEmail = variables.email;
+    const { errors } = response;
+
+    expect(errors).toBe(undefined);
 
     expect(receivedEmail).toBe(expectedEmail);
 
@@ -54,10 +57,30 @@ describe("Signup mutation", () => {
 
     expect(userIdFromToken).toBe(receivedIdAsNumber);
   });
+
+  it("when data is invalid throws an error", async () => {
+    const variables = { email: "@invalid.com", password: "123142354345" };
+
+    const response: UserSignupResponse = await toPromise(
+      graphql({
+        query: SIGNUP_MUTATION,
+        variables,
+      })
+    );
+
+    const { errors, data } = response;
+
+    expect(data).toBe(null);
+    expect(errors).not.toBe(undefined);
+
+    const errorMessage = errors?.slice(0)[0].message;
+
+    expect(errorMessage).toBe("The input is invalid");
+  });
 });
 
 interface UserSignupResponse {
-  data?: {
+  data: {
     signup: {
       token: string;
       user: {
@@ -65,7 +88,7 @@ interface UserSignupResponse {
         email: string;
       };
     };
-  };
+  } | null;
   errors?: Array<{
     message: string;
   }>;
