@@ -1,6 +1,6 @@
 import { randomInt } from "@/utils/randomUtils";
 import { PaginationResponse } from "@/utils/swApiUtils";
-import { callStartwarsApi } from "./starWars.service";
+import { callStartwarsApi, rawCallStarwarsApi } from "./starWars.service";
 
 export const BASE_HEROES_PATH = "people/";
 
@@ -12,7 +12,7 @@ export const getHeroById = async (id: string | number) => {
 };
 
 export const getHeroByUri = async (uri: string): Promise<HeroResponse> => {
-  return callStartwarsApi(uri);
+  return rawCallStarwarsApi(uri);
 };
 
 export const getHeroesPage = async (pageNumber: number | string = 1) => {

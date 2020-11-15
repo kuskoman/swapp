@@ -5,7 +5,9 @@ const heroQueries: QueryResolvers = {
   hero: async (_parent, _args, ctx) => {
     const user = await ctx.currentUser();
     const heroUri = user.hero_uri;
-    return getHeroByUri(heroUri);
+    const hero = getHeroByUri(heroUri);
+
+    return hero;
   },
 };
 
