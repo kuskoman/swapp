@@ -22,7 +22,7 @@ export interface FilmResponse {
   edited: string;
   episode_id: number;
   opening_crawl: string;
-  planets: [];
+  planets: string[];
   producer: string;
   relase_date: string;
   species: string[];

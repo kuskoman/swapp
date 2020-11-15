@@ -1,0 +1,20 @@
+type Query {
+  film(id: ID!): Film!
+}
+
+type Film {
+  created: String!
+  director: String!
+  edited: String!
+  episode_id: Int!
+  opening_crawl: String!
+  producer: String!
+  relase_date: String! # TODO: parse it to DateTime
+  title: String!
+
+  # species: Specie[]
+  # starships: Starship[]
+  # planets: Planet[]
+  # vehicles: Vehicle[]
+  # characters: Hero[]
+}

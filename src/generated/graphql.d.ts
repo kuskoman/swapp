@@ -44,7 +44,25 @@ export type AuthInput = {
 
 export type Query = {
   __typename?: 'Query';
+  film: Film;
   hero: Hero;
+};
+
+
+export type QueryFilmArgs = {
+  id: Scalars['ID'];
+};
+
+export type Film = {
+  __typename?: 'Film';
+  created: Scalars['String'];
+  director: Scalars['String'];
+  edited: Scalars['String'];
+  episode_id: Scalars['Int'];
+  opening_crawl: Scalars['String'];
+  producer: Scalars['String'];
+  relase_date: Scalars['String'];
+  title: Scalars['String'];
 };
 
 export type Hero = {
@@ -151,6 +169,9 @@ export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars['String']>;
   AuthInput: AuthInput;
   Query: ResolverTypeWrapper<{}>;
+  ID: ResolverTypeWrapper<Scalars['ID']>;
+  Film: ResolverTypeWrapper<Film>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
   Hero: ResolverTypeWrapper<Hero>;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
   User: ResolverTypeWrapper<UserModel>;
@@ -164,6 +185,9 @@ export type ResolversParentTypes = {
   String: Scalars['String'];
   AuthInput: AuthInput;
   Query: {};
+  ID: Scalars['ID'];
+  Film: Film;
+  Int: Scalars['Int'];
   Hero: Hero;
   DateTime: Scalars['DateTime'];
   User: UserModel;
@@ -182,7 +206,20 @@ export type AuthPayloadResolvers<ContextType = Context, ParentType extends Resol
 };
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
+  film?: Resolver<ResolversTypes['Film'], ParentType, ContextType, RequireFields<QueryFilmArgs, 'id'>>;
   hero?: Resolver<ResolversTypes['Hero'], ParentType, ContextType>;
+};
+
+export type FilmResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Film'] = ResolversParentTypes['Film']> = {
+  created?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  director?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  edited?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  episode_id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  opening_crawl?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  producer?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  relase_date?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type HeroResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Hero'] = ResolversParentTypes['Hero']> = {
@@ -213,6 +250,7 @@ export type Resolvers<ContextType = Context> = {
   Mutation?: MutationResolvers<ContextType>;
   AuthPayload?: AuthPayloadResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  Film?: FilmResolvers<ContextType>;
   Hero?: HeroResolvers<ContextType>;
   DateTime?: GraphQLScalarType;
   User?: UserResolvers<ContextType>;
