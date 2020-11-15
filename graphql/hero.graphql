@@ -13,8 +13,4 @@ type Hero {
   gender: String!
   created: DateTime!
   edited: DateTime!
-  # homeworld
-  # films
-  # vehicles
-  # starships
 }

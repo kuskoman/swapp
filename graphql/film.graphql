@@ -12,10 +12,4 @@ type Film {
   producer: String!
   relase_date: String! # TODO: parse it to DateTime
   title: String!
-
-  # species: Specie[]
-  # starships: Starship[]
-  # planets: Planet[]
-  # vehicles: Vehicle[]
-  # characters: Hero[]
 }
