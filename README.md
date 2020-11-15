@@ -4,16 +4,16 @@
 
 ### Development
 
-#### Requirements
+#### Development requirements
 
 - [Docker](https://docs.docker.com/get-docker/)
 - [docker-compose](https://docs.docker.com/compose/install/)
-- [Node](https://nodejs.org/en/download/current/)(v15.2.0 recommended)*
+- [Node](https://nodejs.org/en/download/current/) (v15.2.0 recommended)*
 - [Yarn](https://classic.yarnpkg.com/en/docs/install/)
 
 *Works best with [Node Version Manager](https://github.com/nvm-sh/nvm)
 
-#### Setup
+#### "Development" setup
 
 1. Start services from `docker-compose.yml`
 
@@ -58,12 +58,12 @@ SERVER_PORT=4001
 
 ### "Production"
 
-#### Requirements
+#### "Production" requirements
 
 - [Docker](https://docs.docker.com/get-docker/)
 - [docker-compose](https://docs.docker.com/compose/install/)
 
-#### Setup
+#### "Production" setup
 
 Setup in "production" environment is limited to a single command:
 
@@ -141,3 +141,58 @@ Runs migration in current environment.
 #### migration:run:test-db
 
 Runs migration in test environment. This command should not be required.
+
+### Endpoints
+
+Since this application utilizes GraphQL API it constins only single endpoint,
+however I will use this name to describe mutations and queries.
+
+#### signup
+
+`signup` mutation takes `email` and `password`, validates both and returns
+`User` and `token`.
+
+User type definition can be found in [graphql/user.graphql](./graphql/user.graphql).
+
+Token is a string, which should be placed in `Authorization` http header
+(see [Authorization](### Authorization) for more info).
+
+Password validation is using other function than email validation
+(password has to be hashed before object validation is done), therefore in case
+of both of inputs invalid only first (password) error will be returned.
+
+During signup process application makes request to [SWAPI](https://swapi.dev/)
+before validating email.
+
+#### login
+
+`login` mutation is very similiar to [signup](####signup)- takes the same
+arguments and returns the same payload, however instead of creating new
+user checks if hash of entered password is matching hash (and salt) saved
+in database, then created new session in Redis.
+
+#### hero
+
+`hero` query takes optional id argument and returns hero associated with user.
+In case of receiving id differnt than expected returns error.
+
+#### films
+
+`films` query returns all films associated with user.
+
+#### film
+
+`film` query takes id as an argument and returns requested
+film if users hero has its ownership. Otherwise returns forbidden error.
+
+#### species
+
+`species` query returns all species associated with user.
+
+#### specie
+
+`specie` query takes id as an argument and returns requested
+specie if users hero has its ownership. Otherwise returns forbidden error.
+
+Yes, I know that word *specie* does not exists. I just needed a name to distinguish
+it from indexing endpoint, so I had to be creative.
