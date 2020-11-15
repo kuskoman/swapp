@@ -112,7 +112,7 @@ export type Specie = {
 
 export type User = {
   __typename?: 'User';
-  id: Scalars['String'];
+  id: Scalars['ID'];
   email: Scalars['String'];
 };
 
@@ -293,7 +293,7 @@ export type SpecieResolvers<ContextType = Context, ParentType extends ResolversP
 };
 
 export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
-  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
