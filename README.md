@@ -27,13 +27,19 @@
     yarn
     ```
 
-3. Migrate database
+3. Build migrations (with application)
+
+   ```shell
+   yarn build
+   ```
+
+4. Migrate database
 
    ```shell
    yarn migration:run
    ```
 
-4. Start the application in development mode
+5. Start the application in development mode
 
    ```shell
    yarn start
@@ -81,3 +87,57 @@ GraphQL is 7th layer protocol and should be transport layer independent,
 which in this case causes problems because its missing request headers
 feature. If you really want to use this application you should look
 for forks and/or extensions allowing to pass custom headers.
+
+If you are using app in development mode you can use web version
+of GraphQLPlayground exposed along with API.
+
+### Commands
+
+Application contains node scripts, which could be useful during application
+development:
+
+#### build
+
+Builds the application to JavaScript files and maps using [ttypescript](https://github.com/cevek/ttypescript),
+[typescript-transform-paths plugin](https://github.com/LeDDGroup/typescript-transform-paths)
+and (of course) TypeScript compiler.
+
+#### start
+
+Starts application using [ts-node](https://www.npmjs.com/package/ts-node) and
+sets `NODE_ENV` in application process to `development`.
+
+#### test
+
+Runs tests located under `test/` directory using [Jest](https://jestjs.io/) and
+[ts-jest](https://github.com/kulshekhar/ts-jest).
+
+This directory contains all types of tests and requires database to work.
+After the command is executed test database is migrated, and after tests
+are finished the database is being dropped.
+
+Tests are executed on the same redis instance devlopment uses.
+
+#### types:generate
+
+Generates types and interfaces for query, mutation and type resolvers using
+wonderful [GraphQL-codegen library](https://graphql-code-generator.com/).
+
+Generated files are stored under `generated/graphql.d.ts`.
+
+#### migration:create
+
+Helper for creating migration files. Requires `<name>` positional argument to work.
+Example:
+
+```shell
+yarn migration:create AddUsers
+```
+
+#### migration:run
+
+Runs migration in current environment.
+
+#### migration:run:test-db
+
+Runs migration in test environment. This command should not be required.
