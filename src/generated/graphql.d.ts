@@ -47,6 +47,8 @@ export type Query = {
   film: Film;
   films: Array<Film>;
   hero: Hero;
+  specie: Specie;
+  species: Array<Specie>;
 };
 
 
@@ -56,6 +58,11 @@ export type QueryFilmArgs = {
 
 
 export type QueryHeroArgs = {
+  id?: Maybe<Scalars['ID']>;
+};
+
+
+export type QuerySpecieArgs = {
   id?: Maybe<Scalars['ID']>;
 };
 
@@ -85,6 +92,23 @@ export type Hero = {
   edited: Scalars['DateTime'];
 };
 
+
+export type Specie = {
+  __typename?: 'Specie';
+  name: Scalars['String'];
+  classification: Scalars['String'];
+  designation: Scalars['String'];
+  average_height: Scalars['String'];
+  skin_colors: Scalars['String'];
+  hair_colors: Scalars['String'];
+  eye_colors: Scalars['String'];
+  average_lifespan: Scalars['String'];
+  homeworld: Scalars['String'];
+  language: Scalars['String'];
+  created: Scalars['String'];
+  edited: Scalars['String'];
+  url: Scalars['String'];
+};
 
 export type User = {
   __typename?: 'User';
@@ -180,6 +204,7 @@ export type ResolversTypes = {
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Hero: ResolverTypeWrapper<Hero>;
   DateTime: ResolverTypeWrapper<Scalars['DateTime']>;
+  Specie: ResolverTypeWrapper<Specie>;
   User: ResolverTypeWrapper<UserModel>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
@@ -196,6 +221,7 @@ export type ResolversParentTypes = {
   Int: Scalars['Int'];
   Hero: Hero;
   DateTime: Scalars['DateTime'];
+  Specie: Specie;
   User: UserModel;
   Boolean: Scalars['Boolean'];
 };
@@ -215,6 +241,8 @@ export type QueryResolvers<ContextType = Context, ParentType extends ResolversPa
   film?: Resolver<ResolversTypes['Film'], ParentType, ContextType, RequireFields<QueryFilmArgs, 'id'>>;
   films?: Resolver<Array<ResolversTypes['Film']>, ParentType, ContextType>;
   hero?: Resolver<ResolversTypes['Hero'], ParentType, ContextType, RequireFields<QueryHeroArgs, never>>;
+  specie?: Resolver<ResolversTypes['Specie'], ParentType, ContextType, RequireFields<QuerySpecieArgs, never>>;
+  species?: Resolver<Array<ResolversTypes['Specie']>, ParentType, ContextType>;
 };
 
 export type FilmResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Film'] = ResolversParentTypes['Film']> = {
@@ -247,6 +275,23 @@ export interface DateTimeScalarConfig extends GraphQLScalarTypeConfig<ResolversT
   name: 'DateTime';
 }
 
+export type SpecieResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Specie'] = ResolversParentTypes['Specie']> = {
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  classification?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  designation?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  average_height?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  skin_colors?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  hair_colors?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  eye_colors?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  average_lifespan?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  homeworld?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  language?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  created?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  edited?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  url?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type UserResolvers<ContextType = Context, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
   id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
@@ -260,6 +305,7 @@ export type Resolvers<ContextType = Context> = {
   Film?: FilmResolvers<ContextType>;
   Hero?: HeroResolvers<ContextType>;
   DateTime?: GraphQLScalarType;
+  Specie?: SpecieResolvers<ContextType>;
   User?: UserResolvers<ContextType>;
 };
 
