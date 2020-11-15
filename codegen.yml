@@ -7,5 +7,6 @@ generates:
       - 'typescript'
       - 'typescript-resolvers'
 config:
+  contextType: ../types#Context
   mappers:
     User: ./entities/user.entity#User as UserModel
