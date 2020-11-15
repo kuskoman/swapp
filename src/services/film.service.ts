@@ -1,3 +1,4 @@
+import { validateId } from "@/utils/swApiUtils";
 import { callStartwarsApi, rawCallStarwarsApi } from "./starWars.service";
 
 export const BASE_FILMS_PATH = "films/";
@@ -5,6 +6,7 @@ export const BASE_FILMS_PATH = "films/";
 export const getFilmById = async (
   id: string | number
 ): Promise<FilmResponse> => {
+  validateId(id);
   const resourcePath = `${BASE_FILMS_PATH}/${id}`;
   const heroData = await callStartwarsApi<FilmResponse>(resourcePath);
 

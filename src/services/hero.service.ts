@@ -1,10 +1,11 @@
 import { randomInt } from "@/utils/randomUtils";
-import { PaginationResponse } from "@/utils/swApiUtils";
+import { PaginationResponse, validateId } from "@/utils/swApiUtils";
 import { callStartwarsApi, rawCallStarwarsApi } from "./starWars.service";
 
 export const BASE_HEROES_PATH = "people/";
 
 export const getHeroById = async (id: string | number) => {
+  validateId(id);
   const resourcePath = `${BASE_HEROES_PATH}/${id}`;
   const heroData = await callStartwarsApi<HeroResponse>(resourcePath);
 

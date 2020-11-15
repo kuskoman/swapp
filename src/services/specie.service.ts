@@ -1,9 +1,10 @@
-import { PaginationResponse } from "@/utils/swApiUtils";
+import { PaginationResponse, validateId } from "@/utils/swApiUtils";
 import { callStartwarsApi, rawCallStarwarsApi } from "./starWars.service";
 
 export const BASE_SPECIES_PATH = "species/";
 
 export const getSpecieById = async (id: string | number) => {
+  validateId(id);
   const resourcePath = `${BASE_SPECIES_PATH}/${id}`;
   const heroData = await callStartwarsApi<SpeciesResponse>(resourcePath);
 
