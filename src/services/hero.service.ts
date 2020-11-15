@@ -46,16 +46,15 @@ export interface HeroResponse {
   skin_color: string;
   eye_color: string;
   birth_year: string;
-  gender: Gender;
+  gender: string;
   created: string;
   edited: string;
   homeworld: string;
   films: string[];
   vehicles: string[];
   starships: string[];
+  species: string[];
   url: string;
 }
 
 export type HeroPageResponse = PaginationResponse<HeroResponse>;
-
-export type Gender = "male" | "female" | "n/a" | string; // this makes sense only for autocompletion
