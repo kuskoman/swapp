@@ -49,6 +49,7 @@ export interface HeroResponse {
   films: string[];
   vehicles: string[];
   starships: string[];
+  url: string;
 }
 
 export type HeroPageResponse = PaginationResponse<HeroResponse>;

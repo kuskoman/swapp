@@ -8,6 +8,7 @@ import {
 } from "@/utils/passwordUtils";
 import ValidationError, { validateClassObject } from "@/utils/validationUtils";
 import { GraphQLError } from "graphql";
+import { getRandomHero } from "./hero.service";
 
 export const createUser = async ({
   email,
@@ -16,11 +17,12 @@ export const createUser = async ({
   validatePassword(password);
   await checkUserUniqueness(email);
   const passwordDigest = await hashPassword(password);
+  const randomHero = await getRandomHero();
 
   const user = new User();
   user.email = email;
   user.password_digest = passwordDigest;
-  user.hero_uri = "https://swapi.dev/api/people/8/"; // random number choosen by a dick roll. TODO: change later
+  user.hero_uri = randomHero.url;
 
   await validateClassObject(user);
 
