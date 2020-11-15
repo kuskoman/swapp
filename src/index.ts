@@ -1,10 +1,10 @@
 import "dotenv/config";
 import "reflect-metadata";
-import chalk from "chalk";
 import server from "./server";
+import logger from "./logger";
 
-const port = process.env.EXPRESS_PORT || 4000;
+const port = process.env.SERVER_PORT || 4000;
 
-server.listen(port, () => {
-  console.log(chalk.green(`Server listening on port ${port}`));
+server.listen({ port }).then(({ url }) => {
+  logger.info(`Server ready at ${url}`);
 });

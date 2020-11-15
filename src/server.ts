@@ -3,6 +3,7 @@ import schema from "./schema";
 import { getUser } from "./services/user.service";
 import { Context } from "./types";
 import { ApolloServer } from "apollo-server";
+import apolloLogger from "./loggingPlugin";
 
 const isDevelopment = process.env.NODE_ENV === "development";
 
@@ -15,6 +16,7 @@ const server = new ApolloServer({
       return getUser(userId);
     },
   }),
+  plugins: [apolloLogger],
   subscriptions: false,
   playground: isDevelopment,
   debug: isDevelopment,
