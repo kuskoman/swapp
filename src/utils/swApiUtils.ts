@@ -20,7 +20,7 @@ export const validateId = (id: string | number) => {
     valid = false;
   }
 
-  if (Number.isInteger(Number(id))) {
+  if (!Number.isInteger(Number(id))) {
     valid = false;
   }
 
