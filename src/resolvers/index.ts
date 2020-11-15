@@ -3,6 +3,7 @@ import scalars from "./scalars";
 import authMutations from "./mutations/auth";
 
 import heroQueries from "./queries/hero";
+import filmQueries from "./queries/film";
 
 const resolvers = {
   Mutation: {
@@ -10,6 +11,7 @@ const resolvers = {
   },
   Query: {
     ...heroQueries,
+    ...filmQueries,
   },
   ...scalars,
 };
