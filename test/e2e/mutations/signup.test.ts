@@ -9,6 +9,7 @@ const SIGNUP_MUTATION = gql`
     signup(input: { email: $email, password: $password }) {
       token
       user {
+        id
         email
       }
     }
@@ -49,8 +50,9 @@ describe("Signup mutation", () => {
 
     const userIdFromToken = await getUserIdFromToken(token as string);
     const receivedId = userData?.id;
+    const receivedIdAsNumber = Number(receivedId);
 
-    expect(userIdFromToken).toBe(receivedId);
+    expect(userIdFromToken).toBe(receivedIdAsNumber);
   });
 });
 
