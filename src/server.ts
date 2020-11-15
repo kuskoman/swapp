@@ -1,21 +1,24 @@
-import express from "express";
-import { graphqlHTTP } from "express-graphql";
 import { getUserId } from "./auth/authorizeApiRequest";
 import schema from "./schema";
 import { getUser } from "./services/user.service";
+import { Context } from "./types";
+import { ApolloServer } from "apollo-server";
 
-const server = express();
-server.use("/graphql", (req, resp) => {
-  return graphqlHTTP({
-    schema,
-    graphiql: true,
-    context: {
-      currentUser: async () => {
-        const userId = await getUserId(req);
-        return getUser(userId);
-      },
+const isDevelopment = process.env.NODE_ENV === "development";
+
+const server = new ApolloServer({
+  schema,
+  context: async ({ req }: any): Promise<Context> => ({
+    ...req,
+    currentUser: async () => {
+      const userId = await getUserId(req);
+      return getUser(userId);
     },
-  })(req, resp);
+  }),
+  subscriptions: false,
+  playground: isDevelopment,
+  debug: isDevelopment,
+  tracing: isDevelopment,
 });
 
 export default server;
