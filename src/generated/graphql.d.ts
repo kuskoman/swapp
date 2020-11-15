@@ -45,6 +45,7 @@ export type AuthInput = {
 export type Query = {
   __typename?: 'Query';
   film: Film;
+  films: Array<Film>;
   hero: Hero;
 };
 
@@ -212,6 +213,7 @@ export type AuthPayloadResolvers<ContextType = Context, ParentType extends Resol
 
 export type QueryResolvers<ContextType = Context, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   film?: Resolver<ResolversTypes['Film'], ParentType, ContextType, RequireFields<QueryFilmArgs, 'id'>>;
+  films?: Resolver<Array<ResolversTypes['Film']>, ParentType, ContextType>;
   hero?: Resolver<ResolversTypes['Hero'], ParentType, ContextType, RequireFields<QueryHeroArgs, never>>;
 };
 
