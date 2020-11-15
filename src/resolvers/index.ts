@@ -1,4 +1,4 @@
-import { resolvers as scalars } from "graphql-scalars";
+import scalars from "./scalars";
 
 import authMutations from "./mutations/auth";
 
