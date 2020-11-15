@@ -11,6 +11,10 @@ export const getHeroById = async (id: string | number) => {
   return heroData;
 };
 
+export const getHeroByUri = async (uri: string): Promise<HeroResponse> => {
+  return callStartwarsApi(uri);
+};
+
 export const getHeroesPage = async (pageNumber: number | string = 1) => {
   const resourcePath = `${BASE_HEROES_PATH}/?page=${pageNumber}`;
   const heroesPage = await callStartwarsApi<HeroPageResponse>(resourcePath);
