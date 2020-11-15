@@ -263,3 +263,80 @@ as a template and copied this part of code. During my work with previous
 GraphQL projects I used `apollo-graphql` and even developed my own
 plugin using their api: [simple-apollo-logger](https://github.com/est-normalis/simple-apollo-logger),
 which is used in this project.
+
+### Thinks that are bad and should have been done better way
+
+Due to limited amount of time and the fact that during development
+process I focused more on application usability than on its quality
+there are a lot of things I know I have done wrong way, or just
+could be improved.
+
+#### Error handling
+
+Error handling in this application is pretty (if not very) bad.
+When I started learning GraphQL I saw that returning
+errors in data was a popular aproach (at least in tutorials),
+and I fe. used it in
+[this repository, which is over 2 years old](https://github.com/kuskoman/GiraffeCMS-backend/blob/master/app/graphql/mutations/create_user.rb)
+(it's written in Ruby on Rails).
+In this application I am just throwing `ApolloError`s, which
+are preventing other operations to respond if more than other
+query/mutation is executed at the same time. Also, the error messages,
+even if pretty informative in development, would be looking
+pretty bad on production.
+
+#### Missing tests
+
+It's one of the issues I can say would be totally fixed
+if I had more time and/or energy to fix it. In the moment
+of writing this line there are only a few tests for one
+service and for auth. At this moment there is not a single
+e2e test, or test mocking api calls (/using api). Also, there
+is no logic responsible for executing tests on different database
+than development. I only implemented util using very simple
+way to acquire server instance to be used in e2e tests.
+
+#### Missing "central" config module
+
+At this moment config is just stored in environment variable
+and there is no way to get all of them required to use application.
+I notice this problem, however I decided not to make anything
+about it, because there is not that much of them, as well
+as some of them are used in `ormconfig.js` which makes had to
+fetch them from TypeScript file (but mostly, because it requires time).
+
+#### Not parsing dates
+
+I did not do that, because I remember that in one application
+parsing custom Date and DateTime scalars took me way more
+time than it should, so I considered it a feature that may
+take a lot of time (but I can implement it if needed).
+
+#### Parsing (and caching)
+
+I had two ideas how to cache these api calls-
+by IDs and by URLs provided by api response.
+Unfortunatelly, index action calls are not returning
+url of resource (just only the next/prev page).
+This could have been solved by parsing these URLs
+(in case of "normal" url not provided), however
+for some reason I did not do that and ended up
+with this a bit weird code.
+
+#### Commit history
+
+Commit history in this repository may look a bit like a spaghetti-
+I prefer working on a single branch when I am writing something alone.
+This allows me to "jump" from feature to feature when I want to,
+without doing rebases/merges, etc.
+In my defense I will say that I tried to keep the commit history clean
+and not to write funny (?) messages in titles, just in commit descriptions
+if really needed (this is actually more universal than just this project).
+
+#### Documentation
+
+In my current job I am usually working with [OpenAPI Specification](https://swagger.io/specification/),
+and I consider it enough to work with our api. Since documentation
+was mentioned in task I decided to make it a part of readme,
+and use it not only to describe how to use endpoint (actually mutation/query),
+but also to describe how application is working "under the hood".
