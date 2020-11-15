@@ -1,4 +1,4 @@
-import { startTestServer } from "../../helpers/apolloInstance";
+import { ServerResponse, startTestServer } from "../../helpers/apolloInstance";
 import { toPromise } from "apollo-link";
 import gql from "graphql-tag";
 import { UserID } from "@/types";
@@ -79,17 +79,14 @@ describe("Signup mutation", () => {
   });
 });
 
-interface UserSignupResponse {
-  data: {
-    signup: {
-      token: string;
-      user: {
-        id: UserID;
-        email: string;
-      };
+interface SignupData {
+  signup: {
+    token: string;
+    user: {
+      id: UserID;
+      email: string;
     };
-  } | null;
-  errors?: Array<{
-    message: string;
-  }>;
+  };
 }
+
+type UserSignupResponse = ServerResponse<SignupData>;

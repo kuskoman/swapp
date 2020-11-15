@@ -25,6 +25,13 @@ export const startTestServer = async () => {
   };
 };
 
+export type ServerResponse<T> = {
+  data: T | null;
+  errors?: Array<{
+    message: string;
+  }>;
+};
+
 export interface ExecuteOperationInput {
   query: DocumentNode;
   variables?: Object;
