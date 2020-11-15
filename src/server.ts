@@ -8,7 +8,7 @@ const server = express();
 server.use("/graphql", (req) => {
   return graphqlHTTP({
     schema,
-    graphiql: process.env.NODE_ENV === "development",
+    graphiql: true,
     context: {
       currentUser: async () => {
         const userId = await getUserId(req);
