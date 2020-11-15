@@ -63,7 +63,7 @@ export type QueryHeroArgs = {
 
 
 export type QuerySpecieArgs = {
-  id?: Maybe<Scalars['ID']>;
+  id: Scalars['ID'];
 };
 
 export type Film = {
@@ -241,7 +241,7 @@ export type QueryResolvers<ContextType = Context, ParentType extends ResolversPa
   film?: Resolver<ResolversTypes['Film'], ParentType, ContextType, RequireFields<QueryFilmArgs, 'id'>>;
   films?: Resolver<Array<ResolversTypes['Film']>, ParentType, ContextType>;
   hero?: Resolver<ResolversTypes['Hero'], ParentType, ContextType, RequireFields<QueryHeroArgs, never>>;
-  specie?: Resolver<ResolversTypes['Specie'], ParentType, ContextType, RequireFields<QuerySpecieArgs, never>>;
+  specie?: Resolver<ResolversTypes['Specie'], ParentType, ContextType, RequireFields<QuerySpecieArgs, 'id'>>;
   species?: Resolver<Array<ResolversTypes['Specie']>, ParentType, ContextType>;
 };
 

@@ -1,5 +1,5 @@
 type Query {
-  specie(id: ID): Specie!
+  specie(id: ID!): Specie!
   species: [Specie!]!
 }
 
