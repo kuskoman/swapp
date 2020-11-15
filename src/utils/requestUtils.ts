@@ -1,5 +1,4 @@
 import { SessionToken } from "@/auth/sessions";
-import { GraphQLError } from "graphql";
 
 export const getAuthorizationToken = (
   request: RequestLikeWithAuthHeaders
@@ -24,7 +23,7 @@ export const extractBearerToken = (token: string): SessionToken => {
   return token;
 };
 
-export class AuthError extends GraphQLError {
+export class AuthError extends Error {
   constructor() {
     super("Not authorized");
     this.name = "AuthError";

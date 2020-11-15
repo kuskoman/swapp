@@ -1,5 +1,4 @@
 import { validate } from "class-validator";
-import { GraphQLError } from "graphql";
 
 export const validateClassObject = async (obj: Object) => {
   const validationErrors = await validate(obj);
@@ -15,7 +14,7 @@ export const validateClassObject = async (obj: Object) => {
   }
 };
 
-export class ValidationError extends GraphQLError {
+export class ValidationError extends Error {
   state: ValidationErrorInfo[];
   constructor(errors: ValidationErrorInfo[]) {
     super("The input is invalid");

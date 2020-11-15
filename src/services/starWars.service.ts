@@ -2,7 +2,6 @@ import redis from "@/redis";
 import { notEmptyString } from "@/utils/arrayUtils";
 import { BaseResponse, PaginationResponse } from "@/utils/swApiUtils";
 import axios, { AxiosResponse } from "axios";
-import { GraphQLError } from "graphql";
 
 export const SWAPI_BASE_URL = "http://swapi.dev/api/";
 
@@ -85,7 +84,7 @@ const getCachedResponse = async <T>(uri: string): Promise<T | null> => {
 
 const redisKey = (uri: string) => `swapi:${uri}`;
 
-export class ExternalServiceError extends GraphQLError {
+export class ExternalServiceError extends Error {
   constructor() {
     super("Error of external service");
     this.name = "ExternalServiceError";

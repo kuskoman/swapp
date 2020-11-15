@@ -1,7 +1,6 @@
 import { User } from "@/entities/user.entity";
 import { getUser } from "@/services/user.service";
 import { UserID } from "@/types";
-import { GraphQLError } from "graphql";
 
 export const convertToUser = async (
   userInput: UserID | User
@@ -14,7 +13,7 @@ export const convertToUser = async (
   return userInput;
 };
 
-export class ForbiddenError extends GraphQLError {
+export class ForbiddenError extends Error {
   constructor() {
     super("Forbidden");
     this.name = "ForbiddenError";

@@ -7,7 +7,6 @@ import {
   validatePassword,
 } from "@/utils/passwordUtils";
 import ValidationError, { validateClassObject } from "@/utils/validationUtils";
-import { GraphQLError } from "graphql";
 import { getRandomHero } from "./hero.service";
 
 export const createUser = async ({
@@ -39,7 +38,7 @@ export const authorizeUser = async ({
   const errorMessage = "Invalid email or password";
 
   if (!user) {
-    throw new GraphQLError(errorMessage); // we do not want to allow checking if email exist in our db
+    throw new Error(errorMessage); // we do not want to allow checking if email exist in our db
   }
 
   const passwordValid = await comparePasswordHash(
