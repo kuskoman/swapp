@@ -166,7 +166,7 @@ before validating email.
 
 #### login
 
-`login` mutation is very similiar to [signup](####signup)- takes the same
+`login` mutation is very similiar to [signup](#signup)- takes the same
 arguments and returns the same payload, however instead of creating new
 user checks if hash of entered password is matching hash (and salt) saved
 in database, then created new session in Redis.
@@ -196,3 +196,28 @@ specie if users hero has its ownership. Otherwise returns forbidden error.
 
 Yes, I know that word *specie* does not exists. I just needed a name to distinguish
 it from indexing endpoint, so I had to be creative.
+
+### Authorization
+
+This app uses authentication logic built nearly from scratch.
+I decided to use this aproach because
+
+1. Its fun
+2. I consider it safe
+3. I don't have any node library which I trust
+
+Auth flow works like this:
+
+1. User provides email and password.
+Email is saved to database with password hashed using bcrypt
+2. Server generates session identifier, key, and key hash (in this case using pretty weak md5).
+3. Server saves key hash with session identifier and user id to Redis db.
+4. User recives key and session identifier. The key is no longer stored in server.
+5. User sends request with key and session identifier received in previous step.
+6. Server finds session data using session identifier and compares hashes.
+7. If both hashes are the same returns user id to application context.
+
+This flow gives application maintainer additional time to enforce password change
+and session reset in case of leaked databases. I am pretty sure there are
+good field-tested implementations of this alghoritm in JS/TS, however as
+I said, I currently don't have them in my "toolbox".
