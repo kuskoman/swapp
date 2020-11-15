@@ -221,3 +221,45 @@ This flow gives application maintainer additional time to enforce password chang
 and session reset in case of leaked databases. I am pretty sure there are
 good field-tested implementations of this alghoritm in JS/TS, however as
 I said, I currently don't have them in my "toolbox".
+
+## About development process
+
+When doing this kind of task I like writing a few words about
+development process and the task itself.
+
+At first I need to mention that creating this application took
+pretty big amount of time (during one weekend I created applications
+for recruitment tasks using completly different technological stacks-
+this application is written in TypeScript and the other one in
+Ruby, which hadn't been used by me for about 1.5 year) and in the
+moment I am writing this line its not finished, but already contains
+around 1400 lines of code* (yes, I understand it's not a good measure).
+
+\* i used this (I am one of the weird guys using Windows and Powershell,
+and claiming than its way better than Bash):
+
+```powershell
+PS C:\Users\kkm\Workspace\startwars-api> dir .\src\ -Filter "*.ts" -Recurse | Get-Content | Measure-Object -line
+
+Lines Words Characters Property
+----- ----- ---------- --------
+ 1110
+
+
+PS C:\Users\kkm\Workspace\startwars-api> dir .\test\ -Filter "*.ts" -Recurse | Get-Content | Measure-Object -line
+
+Lines Words Characters Property
+----- ----- ---------- --------
+  274
+```
+
+When reading code history you may see that I changed `express-graphql`
+to `apollo-server` when working on this task. The reason for this
+modification is that I have totally no experience with express implementation
+of GraphQL- even if under the hood both libraries are using
+the same or very similiar libraries. `express-graphql` library appeared
+in this repository only because I used one of my old private repositories
+as a template and copied this part of code. During my work with previous
+GraphQL projects I used `apollo-graphql` and even developed my own
+plugin using their api: [simple-apollo-logger](https://github.com/est-normalis/simple-apollo-logger),
+which is used in this project.
