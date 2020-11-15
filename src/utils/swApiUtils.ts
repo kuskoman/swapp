@@ -1,4 +1,5 @@
 import { notEmptyString } from "@/utils/arrayUtils";
+import ValidationError from "./validationUtils";
 
 export const getIdFromUri = (uri: string) => {
   let id: number;
@@ -10,6 +11,24 @@ export const getIdFromUri = (uri: string) => {
   }
 
   return id;
+};
+
+export const validateId = (id: string | number) => {
+  let valid = true;
+
+  if (String(id) !== String(Number(id))) {
+    valid = false;
+  }
+
+  if (Number.isInteger(Number(id))) {
+    valid = false;
+  }
+
+  if (!valid) {
+    throw new ValidationError([
+      { key: "id", errors: ["Value is not a valid id"] },
+    ]);
+  }
 };
 
 export type PaginationResponse<T> = {
