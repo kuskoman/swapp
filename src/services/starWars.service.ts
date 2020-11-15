@@ -71,6 +71,7 @@ const saveResponse = async (uri: string, data: Object, type: UriType) => {
   const key = redisKey(uri);
   redis.setAsync(key, stringifiedResponseData);
   redis.expire(key, 60 * 60 * 24);
+  logger.debug(`Cached resource ${uri}`);
 
   if (type === "pagination") {
     (data as PaginationResponse<BaseResponse>).results.forEach((result) => {
@@ -83,6 +84,7 @@ const getCachedResponse = async <T>(uri: string): Promise<T | null> => {
   const key = redisKey(uri);
   const cachedResponse = await redis.getAsync(key);
   if (cachedResponse) {
+    logger.debug(`Got cached resource for ${uri}`);
     const parsedResponse: T = JSON.parse(cachedResponse);
     return parsedResponse;
   }
