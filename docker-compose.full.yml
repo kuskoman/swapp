@@ -9,12 +9,22 @@ services:
     volumes:
       - postgres:/var/lib/postgresql/data
       - ./db_init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sw"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
   redis:
     image: redis
     restart: always
     volumes:
         - ./redis.conf:/usr/local/etc/redis/redis.conf
   app:
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
     build:
       context: .
       dockerfile: Dockerfile
