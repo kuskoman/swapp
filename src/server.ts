@@ -4,8 +4,9 @@ import { getUser } from "./services/user.service";
 import { Context } from "./types";
 import { ApolloServer } from "apollo-server";
 import apolloLogger from "./loggingPlugin";
+import { NODE_ENV } from "./config";
 
-const isDevelopment = process.env.NODE_ENV === "development";
+const isDevelopment = NODE_ENV === "development";
 
 const server = new ApolloServer({
   schema,

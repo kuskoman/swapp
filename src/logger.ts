@@ -1,10 +1,11 @@
 import { createLogger, format, transports } from "winston";
+import { NODE_ENV } from "./config";
 
 const logger = createLogger({
   level: "debug",
 });
 
-switch (process.env.NODE_ENV) {
+switch (NODE_ENV) {
   case "development":
     logger.add(new transports.Console({ format: format.cli() }));
     break;

@@ -296,15 +296,6 @@ is no logic responsible for executing tests on different database
 than development. I only implemented util using very simple
 way to acquire server instance to be used in e2e tests.
 
-#### Missing "central" config module
-
-At this moment config is just stored in environment variable
-and there is no way to get all of them required to use application.
-I notice this problem, however I decided not to make anything
-about it, because there is not that much of them, as well
-as some of them are used in `ormconfig.js` which makes had to
-fetch them from TypeScript file (but mostly, because it requires time).
-
 #### Not parsing dates
 
 I did not do that, because I remember that in one application

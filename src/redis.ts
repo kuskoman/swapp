@@ -1,10 +1,11 @@
+import { REDIS_DB, REDIS_HOST, REDIS_PASSWORD, REDIS_PORT } from "./config";
 import { createAsyncRedisClient } from "./utils/asyncRedis";
 
 const redis = createAsyncRedisClient({
-  host: process.env.REDIS_HOST || "127.0.0.1",
-  port: Number(process.env.REDIS_PORT) || 4002,
-  password: process.env.REDIS_PASSWORD || undefined,
-  db: process.env.REDIS_DB || undefined,
+  host: REDIS_HOST,
+  port: REDIS_PORT,
+  password: REDIS_PASSWORD,
+  db: REDIS_DB,
 });
 
 export default redis;
